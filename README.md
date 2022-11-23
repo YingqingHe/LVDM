@@ -7,11 +7,15 @@ Latent Video Diffusion Models for High-Fidelity Video Generation with Arbitrary 
 Unconditional video generation results with 1000 frames and spatial resolution of 256 $\times$ 256 produced by LVDM.
 
 <p align="center">
-    <img src=assets/long-videos-ucf.gif />
+    <img src=assets/sky-long-001.gif />
+    <img src=assets/sky-long-002.gif />
+    <img src=assets/sky-long-003.gif />
 </p>
 
 <p align="center">
-    <img src=assets/long-videos-sky.gif />
+    <img src=assets/ucf-long-001.gif />
+    <img src=assets/ucf-long-002.gif />
+    <img src=assets/ucf-long-003.gif />
 </p>
 
 
