@@ -2,6 +2,8 @@
 
 Latent Video Diffusion Models for High-Fidelity Video Generation with Arbitrary Lengths  
 *Yingqing He, Tinayu Yang, Yong Zhang, Ying Shan, Qifeng Chen*
+[[Paper](https://arxiv.org/abs/2211.13221)]
+[[Project Page](https://yingqinghe.github.io/LVDM/)]
 
 ## Results
 Unconditional video generation results with 1000 frames and spatial resolution of 256 $\times$ 256 produced by LVDM.
