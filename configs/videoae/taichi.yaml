@@ -1,0 +1,85 @@
+model:
+  base_learning_rate: 1.6e-05 # 8.0e-05
+  target: lvdm.models.autoencoder3d.AutoencoderKL
+  params:
+    monitor: "val/rec_loss"
+    embed_dim: 4
+    image_key: video
+    lossconfig:
+      target: lvdm.models.losses.LPIPSWithDiscriminator
+      params:
+        disc_start: 50001
+        kl_weight: 0.0
+        disc_weight: 0.5
+    ddconfig:
+      double_z: True
+      z_channels: 4
+      encoder:
+        target: lvdm.models.modules.aemodules3d.Encoder
+        params:
+          n_hiddens: 32
+          downsample: [4, 8, 8]
+          image_channel: 3
+          norm_type: group
+          padding_type: replicate
+          double_z: True
+          z_channels: 4
+      
+      decoder:
+        target: lvdm.models.modules.aemodules3d.Decoder
+        params:
+          n_hiddens: 32
+          upsample: [4, 8, 8]
+          z_channels: 4
+          image_channel: 3
+          norm_type: group
+      
+data:
+  target: main.DataModuleFromConfig
+  params:
+    batch_size: 1
+    num_workers: 0
+    wrap: false
+    train:
+      target: lvdm.data.taichi.Taichi
+      params:
+        data_dir: /apdcephfs_cq2/share_1290939/yingqinghe/taichi
+        resolution: 256
+        video_length: 16
+        subset_split: all
+        frame_stride: 4
+    validation:
+      target: lvdm.data.taichi.Taichi
+      params:
+        data_dir: /apdcephfs_cq2/share_1290939/yingqinghe/taichi
+        resolution: 256
+        video_length: 16
+        subset_split: test
+        frame_stride: 4
+lightning:
+  find_unused_parameters: True
+  callbacks:
+    image_logger:
+      target: lvdm.utils.callbacks.ImageLogger
+      params:
+        batch_frequency: 300
+        max_images: 8
+        increase_log_steps: False
+        log_to_tblogger: False
+    metrics_over_trainsteps_checkpoint:
+      target: pytorch_lightning.callbacks.ModelCheckpoint
+      params:
+        filename: "{epoch:06}-{step:09}"
+        save_weights_only: False
+        every_n_epochs: 100
+        every_n_train_steps: null
+  trainer:
+    benchmark: True
+    accumulate_grad_batches: 2
+    batch_size: 1
+    num_workers: 0
+  modelcheckpoint:
+    target: pytorch_lightning.callbacks.ModelCheckpoint
+    params:
+      every_n_epochs: 1
+      filename: "{epoch:04}-{step:06}"

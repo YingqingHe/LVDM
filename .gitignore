@@ -1,0 +1,9 @@
+*.pyc
+*.pyc*
+__pycache__
+.vscode/*
+*.egg-info/
+results/
+*.pt
+*.ckpt
+clip-vit-large-patch14

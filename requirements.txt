@@ -1,0 +1,24 @@
+decord==0.6.0
+einops==0.3.0
+eval==0.0.5
+imageio==2.9.0
+numpy==1.19.2
+omegaconf==2.3.0
+opencv_python_headless==4.6.0.66
+packaging==21.3
+Pillow==9.5.0
+pudb==2019.2
+pytorch_lightning==1.4.2
+PyYAML==6.0
+scikit_learn==1.2.2
+setuptools==59.5.0
+torch==1.9.0+cu111
+torchvision==0.10.0+cu111
+-f https://download.pytorch.org/whl/torch_stable.html
+tqdm==4.64.0
+transformers==4.24.0
+torchmetrics==0.6.0
+moviepy
+av
+timm
+-e .

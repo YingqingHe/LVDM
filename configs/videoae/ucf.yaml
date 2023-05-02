@@ -1,0 +1,84 @@
+model:
+  base_learning_rate: 3.60e-05
+  scale_lr: False
+  target: lvdm.models.autoencoder3d.AutoencoderKL
+  params:
+    monitor: "val/rec_loss"
+    embed_dim: 4
+    lossconfig:
+      target: lvdm.models.losses.LPIPSWithDiscriminator
+      params:
+        disc_start: 50001
+        kl_weight: 0.0
+        disc_weight: 0.5
+    ddconfig:
+      double_z: True
+      z_channels: 4
+      encoder:
+        target: lvdm.models.modules.aemodules3d.Encoder
+        params:
+          n_hiddens: 32
+          downsample: [4, 8, 8]
+          image_channel: 3
+          norm_type: group
+          padding_type: replicate
+          double_z: True
+          z_channels: 4
+      
+      decoder:
+        target: lvdm.models.modules.aemodules3d.Decoder
+        params:
+          n_hiddens: 32
+          upsample: [4, 8, 8]
+          z_channels: 4
+          image_channel: 3
+          norm_type: group
+      
+data:
+  target: main.DataModuleFromConfig
+  params:
+    batch_size: 1
+    num_workers: 0
+    wrap: false
+    train:
+      target: lvdm.data.frame_dataset.VideoFrameDataset
+      params:
+        data_root: ${data_root}
+        resolution: 256
+        video_length: 16
+        dataset_name: UCF-101
+        subset_split: train
+        spatial_transform: center_crop_resize
+        clip_step: 1
+        temporal_transform: rand_clips
+    validation:
+      target: lvdm.data.frame_dataset.VideoFrameDataset
+      params:
+        data_root: ${data_root}
+        resolution: 256
+        video_length: 16
+        dataset_name: UCF-101
+        subset_split: test
+        spatial_transform: center_crop_resize
+        clip_step: 1
+        temporal_transform: rand_clips
+lightning:
+  find_unused_parameters: True
+  callbacks:
+    image_logger:
+      target: lvdm.utils.callbacks.ImageLogger
+      params:
+        batch_frequency: 1000
+        max_images: 8
+        increase_log_steps: False
+        log_to_tblogger: False
+  trainer:
+    benchmark: True
+    accumulate_grad_batches: 2
+    batch_size: 1
+    num_workers: 0
+  modelcheckpoint:
+    target: pytorch_lightning.callbacks.ModelCheckpoint
+    params:
+      every_n_epochs: 1
+      filename: "{epoch:04}-{step:06}"

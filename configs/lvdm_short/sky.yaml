@@ -1,0 +1,134 @@
+model:
+  base_learning_rate: 6.0e-05 # 1.5e-04
+  scale_lr: False
+  target: lvdm.models.ddpm3d.LatentDiffusion
+  params:
+    linear_start: 0.0015
+    linear_end: 0.0155
+    log_every_t: 200
+    timesteps: 1000
+    loss_type: l1
+    first_stage_key: image
+    cond_stage_key: "image"
+    image_size: 32
+    video_length: 4
+    channels: 4
+    monitor: val/loss_simple_ema
+    cond_stage_trainable: False
+    concat_mode: False
+    scale_by_std: False
+    scale_factor: 0.33422927
+    shift_factor: 1.4606637
+    cond_stage_config: __is_unconditional__
+    encoder_type: 3d
+
+    unet_config:
+      target: lvdm.models.modules.openaimodel3d.UNetModel
+      params:
+        image_size: 32
+        in_channels: 4
+        out_channels: 4
+        model_channels: 256
+        attention_resolutions:
+        - 8
+        - 4
+        - 2
+        num_res_blocks: 3
+        channel_mult:
+        - 1
+        - 2
+        - 3
+        - 4
+        num_heads: 4
+        use_temporal_transformer: False
+        use_checkpoint: true
+        legacy: False
+        # temporal
+        kernel_size_t: 1
+        padding_t: 0
+        temporal_length: 4
+        use_relative_position: True
+        use_scale_shift_norm: True
+    first_stage_config:
+      target: lvdm.models.autoencoder3d.AutoencoderKL
+      params:
+        ckpt_path: ${ckpt_path}
+        monitor: "val/rec_loss"
+        embed_dim: 4
+        lossconfig: __is_first_stage__
+        ddconfig:
+          double_z: True
+          z_channels: 4
+          encoder:
+            target: lvdm.models.modules.aemodules3d.Encoder
+            params:
+              n_hiddens: 32
+              downsample: [4, 8, 8]
+              image_channel: 3
+              norm_type: group
+              padding_type: replicate
+              double_z: True
+              z_channels: 4
+          decoder:
+            target: lvdm.models.modules.aemodules3d.Decoder
+            params:
+              n_hiddens: 32
+              upsample: [4, 8, 8]
+              z_channels: 4
+              image_channel: 3
+              norm_type: group
+
+data:
+  target: main.DataModuleFromConfig
+  params:
+    batch_size: 3
+    num_workers: 0
+    wrap: false
+    train:
+      target: lvdm.data.frame_dataset.VideoFrameDataset
+      params:
+        data_root: ${data_root}
+        resolution: 256
+        video_length: 16
+        dataset_name: sky
+        subset_split: train
+        spatial_transform: center_crop_resize
+        temporal_transform: rand_clips
+    validation:
+      target: lvdm.data.frame_dataset.VideoFrameDataset
+      params:
+        data_root: ${data_root}
+        resolution: 256
+        video_length: 16
+        dataset_name: sky
+        subset_split: test
+        spatial_transform: center_crop_resize
+        temporal_transform: rand_clips
+
+lightning:
+  callbacks:
+    image_logger:
+      target: lvdm.utils.callbacks.ImageLogger
+      params:
+        batch_frequency: 1000
+        max_images: 8
+        increase_log_steps: False
+    metrics_over_trainsteps_checkpoint:
+      target: pytorch_lightning.callbacks.ModelCheckpoint
+      params:
+        filename: "{epoch:06}-{step:09}"
+        save_weights_only: False
+        every_n_epochs: 300
+        every_n_train_steps: null
+  trainer:
+    benchmark: True
+    batch_size: 3
+    num_workers: 0
+    num_nodes: 4
+    accumulate_grad_batches: 2
+    max_epochs: 2000
+  modelcheckpoint:
+    target: pytorch_lightning.callbacks.ModelCheckpoint
+    params:
+      every_n_epochs: 1
+      filename: "{epoch:04}-{step:06}"
