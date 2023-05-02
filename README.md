@@ -97,7 +97,7 @@ wget -O models/ae/ae_taichi.ckpt https://huggingface.co/Yingqing/LVDM/resolve/ma
 wget -O models/lvdm_short/short_taichi.ckpt https://huggingface.co/Yingqing/LVDM/resolve/main/lvdm_short/short_taichi.ckpt
 
 # text2video
-wget -O models/t2v/model.ckpt https://huggingface.co/VideoCrafter/t2v-version-1-1/blob/main/resolve/base_t2v/model.ckpt
+wget -O models/t2v/model.ckpt https://huggingface.co/Yingqing/LVDM/resolve/main/lvdm_short/t2v.ckpt
 ```
 <!-- </details>
 </div> -->
@@ -107,7 +107,7 @@ wget -O models/t2v/model.ckpt https://huggingface.co/VideoCrafter/t2v-version-1-
 Download manually:
 - Sky Timelapse: [VideoAE](https://huggingface.co/Yingqing/LVDM/blob/main/ae/ae_sky.ckpt), [LVDM_short](https://huggingface.co/Yingqing/LVDM/blob/main/lvdm_short/short_sky.ckpt), [LVDM_pred](TBD), [LVDM_interp](TBD), [dataset](https://github.com/weixiong-ur/mdgan)
 - Taichi: [VideoAE](https://huggingface.co/Yingqing/LVDM/blob/main/ae/ae_taichi.ckpt), [LVDM_short](https://huggingface.co/Yingqing/LVDM/blob/main/lvdm_short/short_taichi.ckpt), [dataset](https://github.com/AliaksandrSiarohin/first-order-model/blob/master/data/taichi-loading/README.md)
-- Text2Video: [model](https://huggingface.co/VideoCrafter/t2v-version-1-1/blob/main/models/base_t2v/model.ckpt)
+- Text2Video: [model](https://huggingface.co/Yingqing/LVDM/blob/main/lvdm_short/t2v.ckpt)
 
 ---
 ## 💫 Inference 

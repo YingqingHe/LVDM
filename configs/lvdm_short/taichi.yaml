@@ -1,5 +1,5 @@
 model:
-  base_learning_rate: 6.0e-05 # 1.5e-04 # 32 gpus = 7.20e-05 (8gpus) * 2
+  base_learning_rate: 6.0e-05 # 1.5e-04
   scale_lr: False
   target: lvdm.models.ddpm3d.LatentDiffusion
   params:
@@ -61,7 +61,7 @@ model:
           double_z: True
           z_channels: 4
           encoder:
-            target: lvdm.models.modules.aemodules.Encoder
+            target: lvdm.models.modules.aemodules3d.Encoder
             params:
               n_hiddens: 32
               downsample: [4, 8, 8]
@@ -71,7 +71,7 @@ model:
               double_z: True
               z_channels: 4
           decoder:
-            target: lvdm.models.modules.aemodules.Decoder
+            target: lvdm.models.modules.aemodules3d.Decoder
             params:
               n_hiddens: 32
               upsample: [4, 8, 8]
