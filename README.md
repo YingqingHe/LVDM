@@ -169,10 +169,10 @@ AI-generated content has attracted lots of attention recently, but photo-realist
 ## 😉 Citation
 
 ```
-@article{he2023lvdm,
+@article{he2022lvdm,
       title={Latent Video Diffusion Models for High-Fidelity Long Video Generation}, 
       author={Yingqing He and Tianyu Yang and Yong Zhang and Ying Shan and Qifeng Chen},
-      year={2023},
+      year={2022},
       eprint={2211.13221},
       archivePrefix={arXiv},
       primaryClass={cs.CV}
