@@ -172,13 +172,13 @@ def make_dataset_ucf(dir, nframes, class_to_idx, frame_stride=1, clip_step=None)
                     "class_caption": class_caption      #boxing speed bag
                     }
                 frames.append(frame_info)
-                
+            frames = frames[::frame_stride]
+            
             # make videos
             if len(frames) >= nframes:
                 videos.append(frames)
             
             # make clips
-            frames = frames[::frame_stride]
             start_indices = list(range(len(frames)))[::clip_step]
             for i in start_indices:
                 clip = frames[i:i+nframes]
