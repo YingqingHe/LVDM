@@ -1,6 +1,6 @@
 
-CKPT_PRED="$TBD"
-CKPT_INTERP="$TBD"
+CKPT_PRED="models/lvdm_long/sky_pred.ckpt"
+CKPT_INTERP="models/lvdm_long/sky_interp.ckpt"
 AEPATH="models/ae/ae_sky.ckpt"
 CONFIG_PRED="configs/lvdm_long/sky_pred.yaml"
 CONFIG_INTERP="configs/lvdm_long/sky_interp.yaml"
@@ -19,6 +19,7 @@ python scripts/sample_uncond_long_videos.py \
     model.params.first_stage_config.params.ckpt_path=$AEPATH \
     --sample_cond_noise_level 100 \
     --uncond_scale 0.1 \
-    --n_pred_steps 2
+    --n_pred_steps 2 \
+    --sample_type ddim --ddim_steps 50
 
-# if use DDIM： add: `--sample_type ddim --ddim_steps 50`
+# if use DDPM： remove: `--sample_type ddim --ddim_steps 50`
