@@ -124,7 +124,7 @@ bash shellscripts/sample_lvdm_text2video.sh
 
 ### Sample Long Videos 
 ```
-# TBD
+bash shellscripts/sample_lvdm_long.sh
 ```
 
 ---

@@ -1,6 +1,6 @@
 
 CONFIG_PATH="configs/lvdm_short/sky.yaml"
-BASE_PATH="models/lvdm_short/short_sky.ckpt "
+BASE_PATH="models/lvdm_short/short_sky.ckpt"
 AEPATH="models/ae/ae_sky.ckpt"
 OUTDIR="results/uncond_short/"
 
