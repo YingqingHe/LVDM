@@ -1,6 +1,6 @@
 
 
-PROJ_ROOT=""                        # root directory for saving experiment logs
+PROJ_ROOT="results/"                # root directory for saving experiment logs
 EXPNAME="lvdm_videoae_sky"          # experiment name 
 DATADIR="/dataset/sky_timelapse"    # dataset directory
 
@@ -18,8 +18,7 @@ python main.py \
 --auto_resume True \
 lightning.trainer.num_nodes=1 \
 data.params.train.params.data_root=$DATADIR \
-data.params.validation.params.data_root=$DATADIR \
-model.params.first_stage_config.params.ckpt_path=$AEPATH
+data.params.validation.params.data_root=$DATADIR
 
 # -------------------------------------------------------------------------------------------------
 # commands for multi nodes training

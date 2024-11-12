@@ -1,8 +1,8 @@
 
 
-PROJ_ROOT=""                            # root directory for saving experiment logs
-EXPNAME="lvdm_videoae_sky"              # experiment name 
-DATADIR="$YOUR_PATH_TO_UCF/UCF-101/"    # dataset directory
+PROJ_ROOT="results/"                     # input the root directory for saving experiment logs
+EXPNAME="lvdm_videoae_ucf101"              # experiment name 
+DATADIR="UCF-101/"                      # input the dataset directory
 
 CONFIG="configs/videoae/ucf_videodata.yaml"
 

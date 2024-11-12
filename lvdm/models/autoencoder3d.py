@@ -25,6 +25,7 @@ class AutoencoderKL(pl.LightningModule):
                  std=1.,
                  mean=0.,
                  prob=0.2,
+                 **kwargs,
                  ):
         super().__init__()
         self.image_key = image_key

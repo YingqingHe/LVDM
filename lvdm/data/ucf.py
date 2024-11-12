@@ -121,7 +121,7 @@ class UCF101(Dataset):
                 print(f"Load video failed! path = {video_path}")
         
         # sample strided frames
-        all_frames, frame_stride = sample_strided_frames(vid_len, frame_stride, self.video_length)
+        all_frames, fs = sample_strided_frames(vid_len, self.frame_stride, self.video_length)
 
         # select random clip
         rand_idx = random.randint(0, len(all_frames) - self.video_length)
