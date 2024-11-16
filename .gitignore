@@ -8,3 +8,4 @@ results/
 *.ckpt
 clip-vit-large-patch14
 results
+temp

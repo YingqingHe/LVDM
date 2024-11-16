@@ -82,7 +82,7 @@ pip install -r requirements.txt
 
 <!-- <div style="text-indent:25px"> -->
 <!-- <details><summary></summary> -->
-Download via linux commands:
+Download the pretrained checkpoints via the following commands in Linux terminal:
 ```
 mkdir -p models/ae
 mkdir -p models/lvdm_short
@@ -98,6 +98,27 @@ wget -O models/lvdm_short/short_taichi.ckpt https://huggingface.co/Yingqing/LVDM
 
 # text2video
 wget -O models/t2v/model.ckpt https://huggingface.co/Yingqing/LVDM/resolve/main/lvdm_short/t2v.ckpt
+
+```
+
+Prepare UCF-101 dataset
+```
+mkdir temp; cd temp
+
+# Download UCF-101 from the official website https://www.crcv.ucf.edu/data/UCF101.php (The UCF101 data )
+
+wget https://www.crcv.ucf.edu/data/UCF101/UCF101.rar --no-check-certificate
+unrar x UCF101.rar
+
+# Download annotations from https://www.crcv.ucf.edu/data/UCF101.php (The Train/Test Splits for Action Recognition on UCF101 data set)
+
+wget https://www.crcv.ucf.edu/data/UCF101/UCF101TrainTestSplits-RecognitionTask.zip --no-check-certificate
+unzip UCF101TrainTestSplits-RecognitionTask.zip
+
+# Split the train and test split
+cd ..
+python lvdm/data/split_ucf101.py # please check this script
+
 ```
 <!-- </details>
 </div> -->
